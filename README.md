@@ -1,12 +1,14 @@
 # MNIST-CNN
 Houses MNIST dataset classification solution using TensorFlow
 
-Commented python files.
+Refer to comments in the file to understand the step-by-step process.
 
-Softmax approach:
+## Softmax approach:
 
 Accuracy: 91 percent-ish 
 
-CNN approach:
+## CNN approach:
+
+(GPU acceleration recommended) 
 
 Accuracy: 99 percent-ish
