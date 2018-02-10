@@ -1,5 +1,5 @@
 # MNIST-CNN
-Houses MNIST dataset classification solution using TensorFlow
+Houses MNIST dataset classification solution using TensorFlow.
 
 > Refer to comments in the files to understand the step-by-step process.
 
