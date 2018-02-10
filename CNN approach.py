@@ -2,7 +2,7 @@ import tensorflow as tf
 from tensorflow.examples.tutorials.mnist import input_data
 import matplotlib.pyplot as plt
 
-mnist = input_data.read_data_sets("MNIST_data/", one_hot = True
+mnist = input_data.read_data_sets("MNIST_data/", one_hot = True)
 #HELPER
 
 #INIT WEIGHTS
@@ -77,4 +77,34 @@ full_layer_one = tf.nn.relu(normal_full_layer(convo_2_flat,1024))
 hold_prob = tf.placeholder(tf.float32)
 full_one_dropout = tf.nn.dropout(full_layer_one,keep_prob=hold_prob)
 
+y_pred = normal_full_layer(full_one_dropout,10)
 
+# LOSS FUNCTION
+
+cross_entropy = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y_true,logits=y_pred))
+
+# OPTIMIZER
+
+optimizer = tf.train.AdamOptimizer(learning_rate=0.001)
+train = optimizer.minimize(cross_entropy)
+
+init = tf.global_variables_initializer()
+
+steps = 5000
+
+with tf.Session() as sess:
+    sess.run(init)
+
+    for i in range(steps):
+        batch_x, batch_y = mnist.train.next_batch(50)
+        sess.run(train,feed_dict={x:batch_x,y_true:batch_y, hold_prob:0.5})
+
+        if i%100 == 0:
+            print("ON STEP: {}".format(i))
+            print("ACCURACY: ")
+            matches = tf.equal(tf.argmax(y_pred,axis=1), tf.argmax(y_true,1))
+
+            acc = tf.reduce_mean(tf.cast(matches, tf.float32))
+
+            print(sess.run(acc,feed_dict={x:mnist.test.images, y_true:mnist.test.labels,hold_prob:1.0}))
+            print('\n')
