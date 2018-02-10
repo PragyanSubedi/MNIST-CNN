@@ -74,5 +74,7 @@ full_layer_one = tf.nn.relu(normal_full_layer(convo_2_flat,1024))
 
 # DROPOUT
 
-hold_prob = tf.placeholder()
+hold_prob = tf.placeholder(tf.float32)
+full_one_dropout = tf.nn.dropout(full_layer_one,keep_prob=hold_prob)
+
 
